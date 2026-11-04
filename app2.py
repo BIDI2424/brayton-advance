@@ -209,7 +209,7 @@ with tab3:
         rm2.metric("Preheater Exit Temp (Tx)", f"{tx:.2f} K")
         rm3.metric("Net Work Output", f"{w_net_3:.2f} kJ/kg")
 
-        st.info(f"💡 Dengan keberkesanan regenerator sebanyak **{epsilon * 100:.0f}%**, suhu udara sebelum masuk ke ruang pembakaran ditingkatkan kepada **{tx:.2f} K**, sekaligus mengurangkan tenaga haba ($q_{in}$).")
+        st.info(f"💡 Dengan keberkesanan regenerator sebanyak **{epsilon * 100:.0f}%**, suhu udara sebelum masuk ke ruang pembakaran ditingkatkan kepada **{tx:.2f} K**, sekaligus mengurangkan tenaga haba ($q_{{in}}$).")
 
         fig3, ax3_1 = plt.subplots(figsize=(8, 5))
         ax3_1.plot([0, 0], [t1_3, t2_3], "r-", lw=2, label="Compression")
