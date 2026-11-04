@@ -18,6 +18,8 @@ tab1, tab2, tab3 = st.tabs([
     "🔄 3. Regenerative Brayton Cycle"
 ])
 
+cp = 1.005  # Konstanta muatan haba tentu untuk udara (kJ/kg.K)
+
 # =====================================================================
 # TAB 1: IDEAL BRAYTON CYCLE
 # =====================================================================
@@ -36,7 +38,6 @@ with tab1:
         k_1 = st.slider("Specific Heat Ratio (k)", 1.2, 1.67, 1.4, 0.01, key="i_k")
 
     # Calculations (Ideal)
-    cp = 1.005
     p2_1 = p1_1 * rp_1
     t2_1 = t1_1 * (rp_1 ** ((k_1 - 1) / k_1))
     p3_1 = p2_1
