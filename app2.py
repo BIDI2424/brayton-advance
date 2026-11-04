@@ -10,7 +10,7 @@ st.set_page_config(
 )
 
 st.title("🔥 Advanced Brayton Cycle Interactive Simulator (KJM442)")
-st.markdown("A comprehensive educational tool for analyzing Ideal, Actual, and Regenerative Brayton Cycles with Gas Turbine Simulation.")
+st.markdown("A comprehensive educational tool for analyzing Ideal, Actual, and Regenerative Brayton Cycles with Matplotlib visualization and Gas Turbine Simulation.")
 
 # --- NAVIGATION TABS ---
 tab1, tab2, tab3, tab4 = st.tabs([
@@ -61,7 +61,7 @@ with tab1:
         m3.metric("Net Work Output", f"{w_net_1:.2f} kJ/kg")
         m4.metric("Compressor Exit (T2)", f"{t2_1:.2f} K")
 
-        # Plotting Ideal (T-s & P-v Diagrams)
+        # Plotting Ideal (T-s & P-v Diagrams menggunakan Matplotlib)
         fig1, (ax1_1, ax1_2) = plt.subplots(1, 2, figsize=(12, 5))
 
         # T-s Diagram Ideal (Bersambung)
