@@ -1,6 +1,7 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
+import streamlit.components.v1 as components
 
 # MESTI JADI ARAHAN PERTAMA STREAMLIT
 st.set_page_config(
@@ -9,13 +10,14 @@ st.set_page_config(
 )
 
 st.title("🔥 Advanced Brayton Cycle Interactive Simulator (KJM442)")
-st.markdown("A comprehensive educational tool for analyzing Ideal, Actual, and Regenerative Brayton Cycles for gas turbine engines.")
+st.markdown("A comprehensive educational tool for analyzing Ideal, Actual, and Regenerative Brayton Cycles with Gas Turbine Simulation.")
 
 # --- NAVIGATION TABS ---
-tab1, tab2, tab3 = st.tabs([
+tab1, tab2, tab3, tab4 = st.tabs([
     "🔥 1. Ideal Brayton Cycle", 
-    "⚙️ 2. Actual Brayton Cycle (Isentropic)", 
-    "🔄 3. Regenerative Brayton Cycle"
+    "⚙️ 2. Actual Brayton Cycle", 
+    "🔄 3. Regenerative Brayton Cycle",
+    "⚙️ 4. Gas Turbine Simulation"
 ])
 
 cp = 1.005  # Konstanta muatan haba tentu untuk udara (kJ/kg.K)
@@ -225,3 +227,85 @@ with tab3:
         ax3_1.grid(True)
         ax3_1.legend(fontsize=8)
         st.pyplot(fig3)
+
+
+# =====================================================================
+# TAB 4: GAS TURBINE SIMULATION & ANIMATION
+# =====================================================================
+with tab4:
+    st.header("Interactive Gas Turbine Engine Simulation")
+    st.markdown("Visualisasi skematik aliran enjin turbin gas berdasarkan parameter kitaran semasa.")
+
+    col_s1, col_s2 = st.columns([1, 2])
+    
+    with col_s1:
+        st.subheader("Kawalan Simulasi")
+        sim_rp = st.slider("Pressure Ratio (rp) untuk Simulasi", 2.0, 25.0, 10.0, 0.5, key="sim_rp")
+        sim_t3 = st.slider("Turbine Inlet Temp, T3 (K)", 800.0, 1600.0, 1200.0, 10.0, key="sim_t3")
+        
+        sim_t1 = 300.0
+        sim_t2 = sim_t1 * (sim_rp ** (0.4 / 1.4))
+        sim_t4 = sim_t3 / (sim_rp ** (0.4 / 1.4))
+        
+    with col_s2:
+        st.subheader("Skematik Enjin & Aliran Terma Live")
+        
+        turbine_html = f"""
+        <style>
+            .engine-container {{
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                background: #0e1117;
+                padding: 20px;
+                border-radius: 12px;
+                border: 1px solid #30363d;
+                color: white;
+                font-family: sans-serif;
+            }}
+            .module {{
+                flex: 1;
+                padding: 15px;
+                margin: 0 5px;
+                text-align: center;
+                border-radius: 8px;
+                font-weight: bold;
+                font-size: 14px;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            }}
+            .comp {{ background: linear-gradient(135deg, #1f6feb, #388bfd); }}
+            .comb {{ background: linear-gradient(135deg, #d29922, #f85149); }}
+            .turb {{ background: linear-gradient(135deg, #238636, #2ea043); }}
+            
+            .arrow {{
+                font-size: 20px;
+                color: #8b949e;
+                animation: pulse 1.5s infinite;
+            }}
+            @keyframes pulse {{
+                0% {{ opacity: 0.3; }}
+                50% {{ opacity: 1; }}
+                100% {{ opacity: 0.3; }}
+            }}
+        </style>
+        
+        <div class="engine-container">
+            <div class="module comp">
+                <div>COMPRESSOR</div>
+                <div style="font-size: 12px; margin-top:5px; color: #c9d1d9;">T2: {sim_t2:.1f} K</div>
+            </div>
+            <div class="arrow">➔</div>
+            <div class="module comb">
+                <div>COMBUSTOR</div>
+                <div style="font-size: 12px; margin-top:5px; color: #ffd8d8;">T3: {sim_t3:.1f} K</div>
+            </div>
+            <div class="arrow">➔</div>
+            <div class="module turb">
+                <div>TURBINE</div>
+                <div style="font-size: 12px; margin-top:5px; color: #dafbe1;">T4: {sim_t4:.1f} K</div>
+            </div>
+        </div>
+        """
+        components.html(turbine_html, height=130)
+        
+        st.info(f"💡 **Status Aliran Enjin:** Apabila nisbah tekanan meningkat kepada **{sim_rp}**, suhu keluar pemampat ($T_2$) naik kepada **{sim_t2:.2f} K**, manakala suhu gas buangan turbin ($T_4$) berada pada **{sim_t4:.2f} K**.")
